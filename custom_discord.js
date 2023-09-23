@@ -53,11 +53,33 @@ const isChatClass = e => isClassStartWith(e, 'chat');
 const nodeId = e => getAttribute(e, 'id');
 const nodeClass = e => getAttribute(e, 'class');
 
+function openSteam(event, url) {
+  event.preventDefault();
+  window.open(url);
+  return false;
+}
+
+function handleSteamLinkClick(event) {
+  event.preventDefault();
+  const url = event.target.getAttribute('data-steam-url');
+  window.open(url);
+}
+
 function updateSteamLink(node) {
   if (isChatMessagesId(node) || isMainChatContentClass(node) || isChatClass(node) || isMessageContentId(node)) {
     const messageContent = [...node.querySelectorAll('div[id^="message-content"]>span')];
     const filteredMessages = messageContent.filter(e => e.innerHTML === e.innerText);
-    filteredMessages.forEach(e => e.innerHTML = e.innerHTML.replaceAll(steamLinkRegex, '<a href="$1">$1</a>'));
+    filteredMessages.forEach(e => {
+      e.innerHTML = e.innerHTML.replaceAll(
+        steamLinkRegex,
+        (match, p1) => `<a href="#" data-steam-url="${p1}">${p1}</a>`
+      );
+    });
+    filteredMessages.forEach(e => {
+      e.querySelectorAll('a[data-steam-url]').forEach(link => {
+        link.addEventListener('click', handleSteamLinkClick);
+      });
+    });
   }
 }
 
