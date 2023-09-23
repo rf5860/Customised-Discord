@@ -36,6 +36,7 @@ function initCustomDiscord(themes) {
 }
 
 const steamLinkRegex = /(steam:\/\/openurl\/[^\s]+)/g;
+const httpSteamLinkRegex = /(?<!steam:\/\/openurl\/)(https:\/\/store\.steampowered\.com\/\S*)/g;
 
 const hasAttribute = (e, attr) => e && e.hasAttribute && e.hasAttribute(attr);
 const getAttribute = (e, attr) => hasAttribute(e, attr) && e.getAttribute(attr) || `no ${attr}`;
@@ -65,21 +66,40 @@ function handleSteamLinkClick(event) {
   window.open(url);
 }
 
+function addSteamLinks(links) {
+  links.filter(e => {
+    let siblingContent = e && e.nextElementSibling && e.nextElementSibling.textContent || '';
+    return siblingContent.trim() !== '⚙️' && httpSteamLinkRegex.test(e.href);
+  }).forEach(e => {
+    e.insertAdjacentHTML('afterend', ` <a href="#" data-steam-url="steam://openurl/${e.href}">⚙️</a>`);
+    e.parentElement.querySelectorAll('a[data-steam-url]').forEach(link => {
+      link.addEventListener('click', handleSteamLinkClick);
+    });
+  });
+}
+
+
+function createSteamLinks(filteredMessages) {
+  filteredMessages.forEach(e => {
+    e.innerHTML = e.innerHTML.replaceAll(
+      steamLinkRegex,
+      (match, p1) => `<a href="#" data-steam-url="${p1}">${p1}</a>`
+    );
+  });
+  filteredMessages.forEach(e => {
+    e.querySelectorAll('a[data-steam-url]').forEach(link => {
+      link.addEventListener('click', handleSteamLinkClick);
+    });
+  });
+}
+
 function updateSteamLink(node) {
   if (isChatMessagesId(node) || isMainChatContentClass(node) || isChatClass(node) || isMessageContentId(node)) {
-    const messageContent = [...node.querySelectorAll('div[id^="message-content"]>span')];
-    const filteredMessages = messageContent.filter(e => e.innerHTML === e.innerText);
-    filteredMessages.forEach(e => {
-      e.innerHTML = e.innerHTML.replaceAll(
-        steamLinkRegex,
-        (match, p1) => `<a href="#" data-steam-url="${p1}">${p1}</a>`
-      );
-    });
-    filteredMessages.forEach(e => {
-      e.querySelectorAll('a[data-steam-url]').forEach(link => {
-        link.addEventListener('click', handleSteamLinkClick);
-      });
-    });
+    const messageContents = [...node.querySelectorAll('div[id^="message-content"]>span')];
+    const filteredMessages = messageContents.filter(e => e.innerHTML === e.innerText);
+    createSteamLinks(filteredMessages);
+    const linkContents = [...node.querySelectorAll('div[id^="message-content"]>a')];
+    addSteamLinks(linkContents);
   }
 }
 
