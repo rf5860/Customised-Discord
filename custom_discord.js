@@ -54,7 +54,6 @@ const nodeId = e => getAttribute(e, 'id');
 const nodeClass = e => getAttribute(e, 'class');
 
 function updateSteamLink(node) {
-  console.log(`node [${nodeId(node)}](${nodeClass(node)})`, node);
   if (isChatMessagesId(node) || isMainChatContentClass(node) || isChatClass(node) || isMessageContentId(node)) {
     const messageContent = [...node.querySelectorAll('div[id^="message-content"]>span')];
     const filteredMessages = messageContent.filter(e => e.innerHTML === e.innerText);
