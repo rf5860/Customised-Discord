@@ -1,0 +1,29 @@
+:root {
+  --accent: #8be9fd !important;
+  --activity-card-background: #282a36 !important;
+  --background-accent: #44475a !important;
+  --background-accent-alt: #282a36 !important;
+  --background-floating: #44475a !important;
+  --background-nested-floating: var(--background-floating);
+  --background-primary: #282a36 !important;
+  --background-secondary: #44475a !important;
+  --background-secondary-alt: #282a36 !important;
+  --background-tertiary: #44475a !important;
+  --background-modifier-hover: #282a36 !important;
+  --background-modifier-selected: #44475a !important;
+  --channeltextarea-background: #282a36 !important;
+  --interactive-active: #50fa7b !important;
+  --interactive-hover: #f1fa8c !important;
+  --interactive-muted: #44475a !important;
+  --interactive-normal: #bd93f9 !important;
+  --input-background: #282a36 !important;
+}
+
+:root html {
+  --brand-experiment: hsl(302, 100%, 72%) !important;
+  --brand-experiment-560: var(--brand-experiment) !important;
+}
+
+.circleIconButton-1VxDrg {
+  background-color: var(--background-secondary);
+}

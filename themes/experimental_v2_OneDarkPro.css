@@ -1,0 +1,16 @@
+:root {
+  --background-secondary: #3e4451 !important;
+  --interactive-normal: #abb2bf !important;
+  --background-primary: #282c34 !important;
+  --interactive-active: #98c379 !important;
+  --accent: #61AFEF !important;
+  --interactive-hover: #e5c07b !important;
+}
+:root html {
+  --brand-experiment: #61AFEF !important;
+  --brand-experiment-560: var(--brand-experiment) !important;
+}
+.circleIconButton-1VxDrg {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+

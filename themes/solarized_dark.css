@@ -1,0 +1,21 @@
+:root {
+  --accent: #268bd2;
+  --activity-card-background: #002b36;
+  --background-accent: #073642;
+  --background-accent-alt: #002b36;
+  --background-floating: #073642;
+  --background-nested-floating: var(--background-floating);
+  --background-primary: #002b36;
+  --background-secondary: #073642;
+  --background-secondary-alt: #002b36;
+  --background-tertiary: #073642;
+  --background-modifier-hover: #586e75;
+  --background-modifier-selected: #859900;
+  --channeltextarea-background: #002b36;
+  --interactive-active: #dc322f;
+  --interactive-hover: #cb4b16;
+  --interactive-muted: #073642;
+  --interactive-normal: #839496;
+  --input-background: #002b36;
+  --border-color: #586e75;
+}

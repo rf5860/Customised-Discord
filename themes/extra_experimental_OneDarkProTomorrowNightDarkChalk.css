@@ -1,0 +1,31 @@
+:root {
+  --background-tertiary: #3e4451 !important;
+  --background-nested-floating: #3e4451 !important;
+  --background-secondary-alt: #282c34 !important;
+  --border-color: #353b45 !important;
+  --background-modifier-hover: #353b45 !important;
+  --interactive-active: #98c379 !important;
+  --interactive-normal: #abb2bf !important;
+  --activity-card-background: #282c34 !important;
+  --input-background: #282c34 !important;
+  --background-secondary: #3e4451 !important;
+  --channeltextarea-background: #282c34 !important;
+  --accent: #61AFEF !important;
+  --background-accent: #3e4451 !important;
+  --background-accent-alt: #282c34 !important;
+  --brand-experiment: hsl(204, 100%, 71%) !important;
+  --background-modifier-selected: #2c313a !important;
+  --interactive-muted: #3e4451 !important;
+  --background-primary: #282c34 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  --interactive-hover: #e5c07b !important;
+  --background-floating: #3e4451 !important;
+  --brand-experiment-560: hsl(204, 100%, 71%) !important;
+}
+:root html {
+  --brand-experiment: hsl(204, 100%, 71%) !important;
+  --brand-experiment-560: hsl(204, 100%, 71%) !important;
+}
+.circleIconButton-1VxDrg {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
