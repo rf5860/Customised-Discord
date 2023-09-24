@@ -35,8 +35,8 @@ function initCustomDiscord(themes) {
   watchForSteamLinks();
 }
 
-const steamLinkRegex = /(steam:\/\/openurl\/[^\s]+)/g;
-const httpSteamLinkRegex = /(?<!steam:\/\/openurl\/)(https:\/\/store\.steampowered\.com\/\S*)/g;
+const steamLinkRegex = /(steam:\/\/[^\s]+)/g;
+const httpSteamLinkRegex = /(?<!steam:\/\/)(https:\/\/store\.steampowered\.com\/\S*)/g;
 
 const hasAttribute = (e, attr) => e && e.hasAttribute && e.hasAttribute(attr);
 const getAttribute = (e, attr) => hasAttribute(e, attr) && e.getAttribute(attr) || `no ${attr}`;
