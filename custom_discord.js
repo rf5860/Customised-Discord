@@ -50,15 +50,18 @@ const isChatMessagesId = e => isIdStartWith(e, 'chat-messages');
 const isMainChatContentClass = e => isClassStartWith(e, 'chatContent');
 const isMessageContentClass = e => isClassStartWith(e, 'message-content');
 const isMessageContentId = e => isIdStartWith(e, 'message-content');
+
 const isChatClass = e => isClassStartWith(e, 'chat');
 const nodeId = e => getAttribute(e, 'id');
 const nodeClass = e => getAttribute(e, 'class');
 
-function openSteam(event, url) {
-  event.preventDefault();
-  window.open(url);
-  return false;
-}
+const getNextSibling = e => e.nextElementSibling;
+const getTextContent = e => e ? e.textContent : null;
+const trimText = text => text ? text.trim() : '';
+const trimmedSiblingText = e => trimText(getTextContent(getNextSibling(e)));
+const isLastChild = e => e.nextElementSibling === null;
+const isGearPresent = e => trimmedSiblingText(e) !== '⚙️';
+const isSteamLinkWithoutGear = e => isGearPresent && httpSteamLinkRegex.test(e.href)
 
 function handleSteamLinkClick(event) {
   event.preventDefault();
@@ -67,24 +70,19 @@ function handleSteamLinkClick(event) {
 }
 
 function addSteamLinks(links) {
-  links.filter(e => {
-    let siblingContent = e && e.nextElementSibling && e.nextElementSibling.textContent || '';
-    return siblingContent.trim() !== '⚙️' && httpSteamLinkRegex.test(e.href);
-  }).forEach(e => {
+  links.forEach(e => {
     e.insertAdjacentHTML('afterend', ` <a href="#" data-steam-url="steam://openurl/${e.href}">⚙️</a>`);
+    e.classList.add('steam-gear-icon');
     e.parentElement.querySelectorAll('a[data-steam-url]').forEach(link => {
       link.addEventListener('click', handleSteamLinkClick);
     });
   });
 }
 
-
 function createSteamLinks(filteredMessages) {
   filteredMessages.forEach(e => {
-    e.innerHTML = e.innerHTML.replaceAll(
-      steamLinkRegex,
-      (match, p1) => `<a href="#" data-steam-url="${p1}">${p1}</a>`
-    );
+    e.innerHTML = e.innerHTML.replaceAll(steamLinkRegex, (_match, p1) => `<a href="#" data-steam-url="${p1}">${p1}</a>`);
+    e.classList.add('steam-gear-icon');
   });
   filteredMessages.forEach(e => {
     e.querySelectorAll('a[data-steam-url]').forEach(link => {
@@ -95,17 +93,18 @@ function createSteamLinks(filteredMessages) {
 
 function updateSteamLink(node) {
   if (isChatMessagesId(node) || isMainChatContentClass(node) || isChatClass(node) || isMessageContentId(node)) {
-    const messageContents = [...node.querySelectorAll('div[id^="message-content"]>span')];
-    const filteredMessages = messageContents.filter(e => e.innerHTML === e.innerText);
-    createSteamLinks(filteredMessages);
-    const linkContents = [...node.querySelectorAll('div[id^="message-content"]>a')];
-    addSteamLinks(linkContents);
+    const spans = [...node.querySelectorAll('div[id^="message-content"]>span:not(.steam-gear-icon)')];
+    createSteamLinks(spans);
+    const links = [...node.querySelectorAll('div[id^="message-content"]>a:not(.steam-gear-icon)')];
+    addSteamLinks(links);
   }
 }
 
 function watchForSteamLinks() {
-  [...document.querySelectorAll('div[id^="message-content"]>span')].forEach(e => updateSteamLink(e.parentElement));
-  var observer = new MutationObserver((mutationsList, _observer) => {
+  const mainChatContent = document.querySelectorAll('main[class^="chatContent"]');
+  mainChatContent.forEach(e => updateSteamLink(e));
+
+  const observer = new MutationObserver((mutationsList, _observer) => {
     for (let mutation of mutationsList) {
       if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
         for (let node of mutation.addedNodes) {
@@ -115,8 +114,8 @@ function watchForSteamLinks() {
     }
   });
   // TODO: Make this more specific? Nested selectors?
-  var targetNode = document.body;
-  var config = { childList: true, subtree: true };
+  const targetNode = document.body;
+  const config = { childList: true, subtree: true };
   observer.observe(targetNode, config);
 }
 
