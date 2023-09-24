@@ -52,8 +52,8 @@ const isChatMessagesId = e => isIdStartWith(e, 'chat-messages');
 const isMainChatContentClass = e => isClassStartWith(e, 'chatContent');
 const isMessageContentClass = e => isClassStartWith(e, 'message-content');
 const isMessageContentId = e => isIdStartWith(e, 'message-content');
-const isToolbarClass = e => isClassStartWith(e, 'toolbar')
-const isNoThemeSelectorPresent = e => isClassStartWith(e, 'toolbar')
+const isToolbarClass = e => isClassStartWith(e, 'toolbar');
+const isNoThemeSelectorPresent = e => !isClassStartWith(e, 'theme-selectable');
 
 const isChatClass = e => isClassStartWith(e, 'chat');
 const nodeId = e => getAttribute(e, 'id');
@@ -88,16 +88,14 @@ function createSteamLinks(filteredMessages) {
 }
 
 function addThemeSelectorOnLoad() {
-  const toolbar = document.querySelector('div[class^="toolbar"]:not(.theme-selectable)');
-  if (toolbar) {
-    createThemeSelector(toolbar);
-    toolbar.classList.add('theme-selectable');
-  }
+  addThemeSelector(document.querySelector('div[class^="toolbar"]:not(.theme-selectable)'));
 }
 
 function addThemeSelector(node) {
   if (isToolbarClass(node) && isNoThemeSelectorPresent(node)) {
     createThemeSelector(node);
+    node.classList.add('theme-selectable');
+    observeToolbar(document.querySelector('section[class^="title"]').parentElement);
   }
 }
 
@@ -120,10 +118,46 @@ function updatePreExistingMessages() {
   mainChatContent.forEach(e => updateSteamLink(e));
 }
 
+function observeToolbar(targetNode) {
+  console.log(">>>>> Observing node", targetNode);
+  const observer = new MutationObserver((mutationsList, _observer) => {
+    for (let mutation of mutationsList) {
+      if (mutation.type === 'childList') {
+        if (mutation.removedNodes.length > 0) {
+          if (mutation.removedNodes.length > 0) {
+            mutation.removedNodes.forEach(node => {
+              if (isToolbarClass(node) || (node.querySelector && node.querySelector('div[class^="toolbar"]'))) {
+                console.log(">>>>> Toolbar removed", node);
+              }
+            });
+          }
+        }
+        if (mutation.addedNodes.length > 0) {
+          if (mutation.addedNodes.length > 0) {
+            mutation.addedNodes.forEach(node => {
+              if (isToolbarClass(node) || (node.querySelector && node.querySelector('div[class^="toolbar"]:not(.theme-selectable)'))) {
+                console.log(">>>>> Toolbar added", node);
+                addThemeSelector(node.querySelector('div[class^="toolbar"]:not(.theme-selectable)'));
+              }
+            });
+          }
+        }
+      }
+    }
+  });
+
+  // Configuration for the observer:
+  const config = { childList: true, subtree: true };
+
+  // Start observing the target node
+  observer.observe(targetNode, config);
+}
+
 function registerForMutations() {
   const observer = new MutationObserver((mutationsList, _observer) => {
     for (let mutation of mutationsList) {
-      if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+      if (mutation.type === 'childList') {
+        // Check for added nodes
         for (let node of mutation.addedNodes) {
           handleMutation(node);
         }
@@ -131,7 +165,7 @@ function registerForMutations() {
     }
   });
   // TODO: Make this more specific? Nested selectors?
-  const targetNode = document.body;
+  const targetNode = document;
   const config = { childList: true, subtree: true };
   observer.observe(targetNode, config);
 }
@@ -141,7 +175,7 @@ function registerForMutations() {
  */
 function createThemeSelector(node) {
   const paintBrushIcon = `
-<div class="iconWrapper-2awDjA clickable-ZD7xvu" role="button" aria-label="Select Theme" tabindex="0">
+<div class="theme-selector-button iconWrapper-2awDjA clickable-ZD7xvu" role="button" aria-label="Select Theme" tabindex="0">
   <svg viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true" class="icon-2xnN2Y" y="0" x="0">
     <g fill="none">
       <path fill="currentColor" d="M0,103.78c11.7-8.38,30.46.62,37.83-14a16.66,16.66,0,0,0,.62-13.37,10.9,10.9,0,0,0-3.17-4.35,11.88,11.88,0,0,0-2.11-1.35c-9.63-4.78-19.67,1.91-25,10-4.9,7.43-7,16.71-8.18,23.07ZM54.09,43.42a54.31,54.31,0,0,1,15,18.06l50.19-49.16c3.17-3,5-5.53,2.3-10.13A6.5,6.5,0,0,0,117.41,0,7.09,7.09,0,0,0,112.8,1.6L54.09,43.42Zm-16.85,22c2.82,1.52,6.69,5.25,7.61,9.32L65.83,64c-3.78-7.54-8.61-14-15.23-18.58-6.9,9.27-5.5,11.17-13.36,20Z" clip-rule="evenodd" fill-rule="evenodd" transform="scale(0.225)">
