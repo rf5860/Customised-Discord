@@ -72,6 +72,11 @@ Set-Alias npm "C:\Program Files\nodejs\npm"
 
 Write-Host "NPM is installed. Continuing..." -ForegroundColor Green
 #  }
+#   ┌────────────────┐
+#  {│  Install asar  │
+#   └────────────────┘
+Write-Host "Installing asar" -ForegroundColor Blue
+npm install -g asar
 #   ┌──────────────────┐
 #  {│  Change Discord  │
 #   └──────────────────┘
@@ -95,7 +100,7 @@ Write-Host " at " -NoNewline
 Write-Host $currentLocation -ForegroundColor Blue
 
 Write-Host "Extracting $asarFile to ./$unpackDir" -ForegroundColor Yellow
-asar extract $asarFile ./$unpackDir
+& "$ENV:APPDATA\npm\asar.cmd" extract $asarFile ./$unpackDir
 
 Write-Host "Backing up "
 Write-Host $asarFile -ForegroundColor Yellow -NoNewline
