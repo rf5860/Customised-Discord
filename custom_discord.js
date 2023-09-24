@@ -55,14 +55,6 @@ const isChatClass = e => isClassStartWith(e, 'chat');
 const nodeId = e => getAttribute(e, 'id');
 const nodeClass = e => getAttribute(e, 'class');
 
-const getNextSibling = e => e.nextElementSibling;
-const getTextContent = e => e ? e.textContent : null;
-const trimText = text => text ? text.trim() : '';
-const trimmedSiblingText = e => trimText(getTextContent(getNextSibling(e)));
-const isLastChild = e => e.nextElementSibling === null;
-const isGearPresent = e => trimmedSiblingText(e) !== '⚙️';
-const isSteamLinkWithoutGear = e => isGearPresent && httpSteamLinkRegex.test(e.href)
-
 function handleSteamLinkClick(event) {
   event.preventDefault();
   const url = event.target.getAttribute('data-steam-url');
