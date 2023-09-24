@@ -12,37 +12,6 @@ $customDiscordDir = "$ENV:USERPROFILE\Downloads\custom_discord"
 $patchText = "restoreMainWindowBounds\(mainWindow\);"
 # }
 # { Helper Functions
-function InBox {
-  [CmdletBinding()]
-  param(
-      [string]$Text,
-      [ValidateSet('Section', 'Subsection')]
-      [string]$Style = 'Subsection'
-  )
-
-  $hBars = @{ Section = '═'; Subsection = '─'; }
-  $vBars = @{ Section = '║'; Subsection = '│'; }
-  $corners = @{ Section = '╔╗╚╝'; Subsection = '┌┐└┘'; }
-
-  $length = $Text.Length + 4
-  $top = $corners[$Style][0] + ($hBars[$Style] * $length) + $corners[$Style][1]
-  $bottom = $corners[$Style][2] + ($hBars[$Style] * $length) + $corners[$Style][3]
-
-  $colors = @{
-      Section = @{ Box = 'Cyan'; Text = 'Magenta' }
-      Subsection = @{ Box = 'Blue'; Text = 'Yellow' }
-  }
-
-  $boxColor = $colors[$Style].Box
-  $textColor = $colors[$Style].Text
-
-  Write-Host $top -ForegroundColor $boxColor
-  Write-Host ($vBars[$Style] + "  ") -NoNewline -ForegroundColor $boxColor
-  Write-Host $Text -NoNewline -ForegroundColor $textColor
-  Write-Host ("  " + $vBars[$Style]) -ForegroundColor $boxColor
-  Write-Host $bottom -ForegroundColor $boxColor
-}
-
 function InsertPatchText {
   param (
       [Parameter(Mandatory=$true)]
@@ -89,9 +58,8 @@ function InsertPatchText {
 #   ┌──────────────────────────┐
 #  {│  Install Pre-Requisites  │
 #   └──────────────────────────┘
-InBox -Text "Installing Pre-Requisites" -Style Section
-
-InBox -Text "Installing NodeJS and NPM" -Style Subsection
+Write-Host "Installing Pre-Requisites" -ForegroundColor Magenta
+Write-Host "Installing NodeJS and NPM" -ForegroundColor Yellow
 
 Write-Host "Downloading NodeJS from $nodeJsDownloadUrl" -ForegroundColor Blue
 Invoke-WebRequest -Uri $nodeJsDownloadUrl -OutFile "node-$nodeJsVersion-x64.msi"
@@ -107,8 +75,8 @@ Write-Host "NPM is installed. Continuing..." -ForegroundColor Green
 #   ┌──────────────────┐
 #  {│  Change Discord  │
 #   └──────────────────┘
-InBox -Text "Patching Discord" -Style Section
-InBox -Text "Extracting Resources" -Style Subsection
+Write-Host "Patching Discord" -ForegroundColor Magenta
+Write-Host "Extracting Resources" -ForegroundColor Yellow
 
 $discordLocation = "$ENV:LocalAppData\Discord"
 Write-Host "Changing to Discord folder: " -NoNewline
@@ -126,7 +94,7 @@ Write-Host $asarFile -ForegroundColor Yellow -NoNewline
 Write-Host " at " -NoNewline
 Write-Host $currentLocation -ForegroundColor Blue
 
-InBox -Text "Extracting $asarFile to ./$unpackDir" -Style Subsection
+Write-Host "Extracting $asarFile to ./$unpackDir" -ForegroundColor Yellow
 asar extract $asarFile ./$unpackDir
 
 Write-Host "Backing up "
@@ -159,5 +127,5 @@ InsertPatchText -FilePath ./$unpackDir/app/$jsFile -PatchFilePath $patchFile -Ma
 
 Write-Host "Repackaging $asarFile" -ForegroundColor Blue
 asar pack unpacked "./$asarFile"
-InBox -Text "Done!" -Style Section
+Write-Host "Done!" -ForegroundColor Magenta
 # }
