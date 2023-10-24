@@ -39,6 +39,7 @@ function initCustomDiscord(themes) {
 
 const steamLinkRegex = /(steam:\/\/[^\s]+)/g;
 const httpSteamLinkRegex = /(?<!steam:\/\/)(https:\/\/store\.steampowered\.com\/\S*)/g;
+const markdownRegex = /(\|\s*)+\n\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)+\|?\n/;
 
 const hasAttribute = (e, attr) => e && e.hasAttribute && e.hasAttribute(attr);
 const getAttribute = (e, attr) => hasAttribute(e, attr) && e.getAttribute(attr) || `no ${attr}`;
@@ -102,10 +103,18 @@ th {
 document.getElementsByTagName('head')[0].appendChild(style);
 
 function addMarkdown(tables) {
-  tables.forEach(e => {
-    let markdown = e.innerText;
-    e.innerHTML = marked.parse(markdown);
-    e.classList.add('md-tables');
+  tables.forEach(tableNode => {
+    var newInnerHtml = tableNode.innerHTML;
+    const matches = [...tableNode.innerHTML.matchAll(/(<[^>]*?>\|[\s\S]*?\|<\/[^>]*?>)/g)];
+    for (const match of matches) {
+      const newNode = document.createElement('div');
+      newNode.innerHTML = match[1];
+      const newContent = marked.parse(newNode.innerText);
+      const innerHtml = newNode.innerHTML;
+      newInnerHtml = newInnerHtml.replace(match[1], newContent);
+    }
+    tableNode.innerHTML = newInnerHtml;
+    tableNode.classList.add('md-tables');
   });
 }
 
@@ -150,10 +159,10 @@ function updateContents(node) {
     const links = [...node.querySelectorAll('div[id^="message-content"]>a:not(.steam-gear-icon)')];
     addSteamLinks(links);
 
-    const markdownRegex = /(\|\s*)+\n\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)+\|?\n/;
     const allContents = [...node.querySelectorAll('div[id^="message-content"]:not(.md-tables)')];
     const tables = allContents.filter(e => markdownRegex.test(e.innerText));
-    console.log(">>>>> Tables", tables);
+    console.log(">>>>> Tables");
+    tables.forEach(e => console.log(e.innerHTML));
     addMarkdown(tables);
   }
 }
