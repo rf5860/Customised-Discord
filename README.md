@@ -56,6 +56,65 @@ If you're not sure how to run a PowerShell script, then you probably shouldn't r
 
 Run the PowerShell script by searching for PowerShell, clicking it, and 
 
+### Themes
+
+|                        Filename                         |               Human-readable Formatted Name               |
+| ------------------------------------------------------- | --------------------------------------------------------- |
+| atom_one_dark_alt.css                                   | Atom One Dark Alt                                         |
+| atom_one_dark.css                                       | Atom One Dark                                             |
+| dracula_alt_2.css                                       | Dracula Alt 2                                             |
+| dracula_alt.css                                         | Dracula Alt                                               |
+| dracula.css                                             | Dracula                                                   |
+| ex_p2_DarkVibrant.css                                   | Ex P2 Dark Vibrant                                        |
+| ex_p2_Eclipse.css                                       | Ex P2 Eclipse                                             |
+| ex_p2_GothicNightfall.css                               | Ex P2 Gothic Nightfall                                    |
+| ex_p2_vibrant_eclipse.css                               | Ex P2 Vibrant Eclipse                                     |
+| ex_p2_vibrant_eclipses.css                              | Ex P2 Vibrant Eclipses                                    |
+| ex_p2_VibrantNightfall.css                              | Ex P2 Vibrant Nightfall                                   |
+| exp_plus_one_dark_pro_tomorrow_night_dark_chalk.css     | Exp Plus One Dark Pro Tomorrow Night Dark Chalk           |
+| exp_plus_one_dark_pro.css                               | Exp Plus One Dark Pro                                     |
+| experimental_AtomOneDark.css                            | Experimental Atom One Dark                                |
+| experimental_Dracula.css                                | Experimental Dracula                                      |
+| experimental_gruvbox_dark.css                           | Experimental Gruvbox Dark                                 |
+| experimental_OneDarkPro.css                             | Experimental One Dark Pro                                 |
+| experimental_TomorrowNight.css                          | Experimental Tomorrow Night                               |
+| experimental_TomorrowNightBright.css                    | Experimental Tomorrow Night Bright                        |
+| experimental_TomorrowNightEighties.css                  | Experimental Tomorrow Night Eighties                      |
+| experimental_v2_Dracula.css                             | Experimental V2 Dracula                                   |
+| experimental_v2_OneDark.css                             | Experimental V2 One Dark                                  |
+| experimental_v2_OneDarkDark.css                         | Experimental V2 One Dark Dark                             |
+| experimental_v2_OneDarkDarker.css                       | Experimental V2 One Dark Darker                           |
+| experimental_v2_OneDarkDeep.css                         | Experimental V2 One Dark Deep                             |
+| experimental_v2_OneDarkPro.css                          | Experimental V2 One Dark Pro                              |
+| experimental_v2_TomorrowNight.css                       | Experimental V2 Tomorrow Night                            |
+| experimental_v2_TomorrowNightBright.css                 | Experimental V2 Tomorrow Night Bright                     |
+| experimental_v2_TomorrowNightEighties.css               | Experimental V2 Tomorrow Night Eighties                   |
+| experimental_vibrant_nightfall.css                      | Experimental Vibrant Nightfall                            |
+| extra_experimental_OneDarkPro.css                       | Extra Experimental One Dark Pro                           |
+| extra_experimental_OneDarkProTomorrowNightDarkChalk.css | Extra Experimental One Dark Pro Tomorrow Night Dark Chalk |
+| material_one_dark_purple.css                            | Material One Dark Purple                                  |
+| new_style_AtomOneDark.theme.css                         | New Style Atom One Dark                                   |
+| new_style_Dracula.theme.css                             | New Style Dracula                                         |
+| new_style_OneDarkPro.theme.css                          | New Style One Dark Pro                                    |
+| new_style_SolarizedDark.theme.css                       | New Style Solarized Dark                                  |
+| new_style_TomorrowNight.theme.css                       | New Style Tomorrow Night                                  |
+| new_style_TomorrowNightBright.theme.css                 | New Style Tomorrow Night Bright                           |
+| new_style_TomorrowNightEighties.theme.css               | New Style Tomorrow Night Eighties                         |
+| new_style_Zenburn.theme.css                             | New Style Zenburn                                         |
+| one_dark_pro.css                                        | One Dark Pro                                              |
+| purple_own.css                                          | Purple Own                                                |
+| solarized_dark.css                                      | Solarized Dark                                            |
+| tomorrow_night_alt_2.css                                | Tomorrow Night Alt 2                                      |
+| tomorrow_night_alt_3.css                                | Tomorrow Night Alt 3                                      |
+| tomorrow_night_alt.css                                  | Tomorrow Night Alt                                        |
+| tomorrow_night_bright_alt.css                           | Tomorrow Night Bright Alt                                 |
+| tomorrow_night_bright.css                               | Tomorrow Night Bright                                     |
+| tomorrow_night_eighties_alt.css                         | Tomorrow Night Eighties Alt                               |
+| tomorrow_night_eighties.css                             | Tomorrow Night Eighties                                   |
+| tomorrow_night.css                                      | Tomorrow Night                                            |
+| zenburn.css                                             | Zenburn                                                   |
+
+
 ### Additional Details
 
 In case this repository becomes outdated, and you want to know what the code looks like that this script was modifying (or if you want to modify it yourself), then the following details might be useful.

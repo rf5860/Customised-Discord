@@ -65,6 +65,50 @@ function handleSteamLinkClick(event) {
   window.open(url);
 }
 
+
+// Incorporating marked options for GitHub-flavored Markdown
+marked.setOptions({
+  gfm: true
+});
+
+// Adding universal CSS for tables
+let style = document.createElement('style');
+style.type = 'text/css';
+style.innerHTML = `
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+
+th,
+td {
+  border: 1px solid #7A6C9A; /* Dark purple */
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #A7C7E7; /* Pastel blue */
+}
+
+th {
+  background-color: #4C3A65; /* Dark */
+  color: #E6E2F3; /* Light Purple */
+}
+`;
+
+// Append the <style> element to the <head>
+document.getElementsByTagName('head')[0].appendChild(style);
+
+function addMarkdown(tables) {
+  tables.forEach(e => {
+    let markdown = e.innerText;
+    e.innerHTML = marked.parse(markdown);
+    e.classList.add('md-tables');
+  });
+}
+
 function addSteamLinks(links) {
   links.forEach(e => {
     e.insertAdjacentHTML('afterend', ` <a href="#" data-steam-url="steam://openurl/${e.href}">⚙️</a>`);
@@ -88,7 +132,7 @@ function createSteamLinks(filteredMessages) {
 }
 
 function addThemeSelectorOnLoad() {
-  addThemeSelector(document.querySelector('div[class^="toolbar"]:not(.theme-selectable)'));
+  // addThemeSelector(document.querySelector('div[class^="toolbar"]:not(.theme-selectable)'));
 }
 
 function addThemeSelector(node) {
@@ -99,23 +143,31 @@ function addThemeSelector(node) {
   }
 }
 
-function updateSteamLink(node) {
+function updateContents(node) {
   if (isChatMessagesId(node) || isMainChatContentClass(node) || isChatClass(node) || isMessageContentId(node)) {
     const spans = [...node.querySelectorAll('div[id^="message-content"]>span:not(.steam-gear-icon)')];
     createSteamLinks(spans);
     const links = [...node.querySelectorAll('div[id^="message-content"]>a:not(.steam-gear-icon)')];
     addSteamLinks(links);
+
+    const markdownRegex = /(\|\s*)+\n\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)+\|?\n/;
+    const allContents = [...node.querySelectorAll('div[id^="message-content"]:not(.md-tables)')];
+    const tables = allContents.filter(e => markdownRegex.test(e.innerText));
+    console.log(">>>>> Tables", tables);
+    addMarkdown(tables);
   }
 }
 
 function handleMutation(node) {
-  updateSteamLink(node);
-  addThemeSelector(node);
+  updateContents(node);
+  // addThemeSelector(node);
 }
 
 function updatePreExistingMessages() {
   const mainChatContent = document.querySelectorAll('main[class^="chatContent"]');
-  mainChatContent.forEach(e => updateSteamLink(e));
+  mainChatContent.forEach(e =>{
+    updateContents(e); // New function to add Steam links
+  });
 }
 
 function observeToolbar(targetNode) {

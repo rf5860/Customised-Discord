@@ -83,7 +83,10 @@ npm install -g asar
 Write-Host "Patching Discord" -ForegroundColor Magenta
 Write-Host "Extracting Resources" -ForegroundColor Yellow
 
-$discordLocation = "$ENV:LocalAppData\Discord"
+# For PTB
+$discordLocation = "$ENV:LocalAppData\DiscordPTB"
+# For Regular
+# $discordLocation = "$ENV:LocalAppData\Discord"
 Write-Host "Changing to Discord folder: " -NoNewline
 Write-Host $discordLocation -ForegroundColor Blue
 
@@ -127,7 +130,7 @@ $installDir = "$ENV:LocalAppData/Discord/custom_discord"
 Write-Host "Applying patch to " -NoNewline
 Write-Host "./$unpackDir/app/$jsFile" -ForegroundColor Yellow
 
-$patchFile  = "$installDir/customDiscord.patch.js"
+$patchFile = "$installDir/customDiscord.patch.js"
 InsertPatchText -FilePath ./$unpackDir/app/$jsFile -PatchFilePath $patchFile -MatchText $patchText
 
 Write-Host "Repackaging $asarFile" -ForegroundColor Blue
