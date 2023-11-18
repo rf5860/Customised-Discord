@@ -76,26 +76,70 @@ marked.setOptions({
 let style = document.createElement('style');
 style.type = 'text/css';
 style.innerHTML = `
+/* Table base styles */
 table {
-  width: 100%;
   border-collapse: collapse;
-  font-family: Arial, sans-serif;
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.8vw !important;
 }
 
-th,
-td {
-  border: 1px solid #7A6C9A; /* Dark purple */
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #A7C7E7; /* Pastel blue */
-}
-
+/* Table headers */
 th {
-  background-color: #4C3A65; /* Dark */
-  color: #E6E2F3; /* Light Purple */
+  background-color: #4a3f5e; /* A lighter purple that stands out from the base color */
+  color: #ffffff; /* White for maximum contrast */
+  padding: 10px;
+  font-size: 1vw !important;
+  border: 1px solid #5c5470; /* Slightly lighter purple border */
+}
+
+/* Table data cells */
+td {
+  padding: 10px;
+  border: 1px solid #5c5470; /* Consistent with header border */
+  color: #dcdcdc; /* Light grey for readability */
+  background-color: #321c47; /* Darker purple background for rows */
+}
+
+/* Zebra striping for rows, slightly lighter than the base color */
+tr:nth-child(even) {
+  background-color: #2c123a;
+}
+
+/* Hover style for table rows for interactivity */
+tr:hover {
+  background-color: #382956;
+}
+
+/* Responsive table layout for smaller screens */
+@media screen and (max-width: 768px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+
+  td:before {
+    /* Label the data */
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    text-align: left;
+    font-weight: bold;
+    color: #dcdcdc; /* Light grey for readability */
+    content: attr(data-label);
+  }
 }
 `;
 
