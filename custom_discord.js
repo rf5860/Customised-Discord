@@ -76,70 +76,42 @@ marked.setOptions({
 let style = document.createElement('style');
 style.type = 'text/css';
 style.innerHTML = `
-/* Table base styles */
 table {
   border-collapse: collapse;
   width: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: left !important;
+  vertical-align: middle !important;
+}
+
+tr {
+  height: 1.2vw !important;
+}
+
+th {
+  background-color: #4a3f5e;
+  color: #ffffff;
+  font-size: 1vw !important;
+  border: 1px solid #5c5470 !important;
+}
+
+td {
+  border: 1px solid #5c5470;
+  color: #dcdcdc;
+  background-color: #321c47;
   font-size: 0.8vw !important;
 }
 
-/* Table headers */
-th {
-  background-color: #4a3f5e; /* A lighter purple that stands out from the base color */
-  color: #ffffff; /* White for maximum contrast */
-  padding: 10px;
-  font-size: 1vw !important;
-  border: 1px solid #5c5470; /* Slightly lighter purple border */
-}
-
-/* Table data cells */
-td {
-  padding: 10px;
-  border: 1px solid #5c5470; /* Consistent with header border */
-  color: #dcdcdc; /* Light grey for readability */
-  background-color: #321c47; /* Darker purple background for rows */
-}
-
-/* Zebra striping for rows, slightly lighter than the base color */
 tr:nth-child(even) {
   background-color: #2c123a;
 }
 
-/* Hover style for table rows for interactivity */
-tr:hover {
-  background-color: #382956;
+tr:nth-child(odd) {
+  background-color: #1F0D29;
 }
 
-/* Responsive table layout for smaller screens */
-@media screen and (max-width: 768px) {
-  table, thead, tbody, th, td, tr {
-    display: block;
-  }
-
-  thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-
-  td {
-    border: none;
-    position: relative;
-    padding-left: 50%;
-    text-align: right;
-  }
-
-  td:before {
-    /* Label the data */
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    text-align: left;
-    font-weight: bold;
-    color: #dcdcdc; /* Light grey for readability */
-    content: attr(data-label);
-  }
+tr:hover {
+  background-color: #382956;
 }
 `;
 
