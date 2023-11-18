@@ -126,11 +126,10 @@ Write-Host "./$unpackDir/app/$jsFile.bak" -ForegroundColor Blue
 
 Copy-Item -Path "./$unpackDir/app/$jsFile" -Destination "./$unpackDir/app/$jsFile.bak"
 
-$installDir = "$ENV:LocalAppData/Discord/custom_discord"
 Write-Host "Applying patch to " -NoNewline
 Write-Host "./$unpackDir/app/$jsFile" -ForegroundColor Yellow
 
-$patchFile = "$installDir/customDiscord.patch.js"
+$patchFile = "$customDiscordDir/customDiscord.patch.js"
 InsertPatchText -FilePath ./$unpackDir/app/$jsFile -PatchFilePath $patchFile -MatchText $patchText
 
 Write-Host "Repackaging $asarFile" -ForegroundColor Blue
