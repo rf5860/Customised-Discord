@@ -83,7 +83,7 @@ table {
   text-align: left !important;
   vertical-align: middle !important;
 }
-pre {
+pre, span[class^="hljs"] {
   font-family: 'JetBrainsMono Nerd Font Mono', Consolas, 'Source Code Pro', 'gg mono', monospace !important;
 }
 
