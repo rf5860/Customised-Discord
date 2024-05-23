@@ -108,7 +108,7 @@ Write-Host "Extracting $asarFile to ./$unpackDir" -ForegroundColor Yellow
 Write-Host "Backing up "
 Write-Host $asarFile -ForegroundColor Yellow -NoNewline
 Write-Host " to "
-Write-Host $currentLocation -ForegroundColor Blue -NoNewline
+Write-Host $currentLocation -ForegroundColor Blue -Newline
 
 Copy-Item -Path "./$asarFile" -Destination "./$asarFile.bak"
 

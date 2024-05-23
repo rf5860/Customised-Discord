@@ -83,6 +83,9 @@ table {
   text-align: left !important;
   vertical-align: middle !important;
 }
+pre {
+  font-family: 'JetBrainsMono Nerd Font Mono', Consolas, 'Source Code Pro', 'gg mono', monospace !important;
+}
 
 tr {
   height: 1.2vw !important;
