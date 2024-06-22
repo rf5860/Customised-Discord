@@ -183,11 +183,13 @@ function updateContents(node) {
     console.log(">>>>> Tables");
     tables.forEach(e => console.log(e.innerHTML));
     addMarkdown(tables);
+    applyUsernameColors();
   }
 }
 
 function handleMutation(node) {
   updateContents(node);
+  applyUsernameColors();
   // addThemeSelector(node);
 }
 
@@ -196,6 +198,7 @@ function updatePreExistingMessages() {
   mainChatContent.forEach(e =>{
     updateContents(e); // New function to add Steam links
   });
+  applyUsernameColors();
 }
 
 function observeToolbar(targetNode) {
@@ -231,6 +234,19 @@ function observeToolbar(targetNode) {
 
   // Start observing the target node
   observer.observe(targetNode, config);
+}
+
+function applyUsernameColors() {
+  const usernames = document.querySelectorAll('span[class^="username"]');
+  usernames.forEach(username => {
+    const text = username.textContent;
+    const colorMatch = text.match(/^(['"])(.+?)\1/i);
+    if (colorMatch) {
+      const color = colorMatch[2];
+      username.style.color = color;
+      username.textContent = text.replace(colorMatch[0], '').trim();
+    }
+  });
 }
 
 function registerForMutations() {
